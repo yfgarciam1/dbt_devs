@@ -1,8 +1,11 @@
 
+dbt-cloud:
+    project-id: 70471823463047
+    
 # Name your project! Project names should contain only lowercase characters
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
-name: 'my_new_project'
+name: 'dbt_devs'
 version: '1.0.0'
 config-version: 2
 
@@ -36,7 +39,11 @@ clean-targets:         # directories to be removed by `dbt clean`
 # using the `{{ config(...) }}` macro.
 
 models:
-  my_new_project:
-    # Applies to all files under models/example/
-    example:
+  dbt_devs:
+  # Config indicated by + and applied to all files under models/data_pipeline
+    staging:
+      +materialized: view
+      snowflake_warehouse: dbt_wh
+    marts:
       +materialized: table
+      snowflake_warehouse: dbt_wh
