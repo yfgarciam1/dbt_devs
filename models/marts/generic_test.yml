@@ -1,0 +1,29 @@
+# This YAML file defines tests for the `fct_orders` model in a dbt project.
+# 
+# Model: fct_orders
+# - `order_key` column:
+#   - Tests:
+#     - `not_null`: Ensures that the column does not contain null values.
+#     - `unique`: Ensures that the column contains unique values.
+#     - `relationship`: Validates a relationship between `order_key` in this model 
+#       and `order_key` in the `stg_tpch_orders` model. The severity level for this 
+#       test is set to "warn".
+# - `status_code` column:
+#   - Tests:
+#     - `accepted_values`: Ensures that the column contains only the specified 
+#       accepted values: ['F', 'O', 'P', 'C', 'D'].
+models:
+  - name: fct_orders
+    columns:
+     - name: order_key
+       tests:
+         - not_null
+         - unique
+         - relationship:
+             to: ref('stg_tpch_orders')
+             field: order_key
+             severity: warn
+     - name: status_code
+       tests:
+         - accepted_values:
+             values: ['P', 'O', 'F']
